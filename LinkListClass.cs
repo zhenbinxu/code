@@ -35,6 +35,16 @@ public class LinkListClass<T>
         return List;
     }
 
+    public ListNode<T> Append(T val)
+    {
+        ListNode<T> last = m_listSentinel;
+        while (last.Next != null) {
+            last = last.Next;
+        }
+        last.Next = new ListNode<T> { Val = val, Next = null};
+        return last.Next;
+    }
+
     public ListNode<T> List
     {
         get

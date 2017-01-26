@@ -13,7 +13,8 @@ namespace Algo
             //TestPairReverse();
             //TestNim();
             //TestSquare();
-            TestTwoSum();
+            //TestTwoSum();
+            TestAddTwoNumbers();
             Console.ReadLine();          
         }
 
@@ -39,6 +40,19 @@ namespace Algo
             else {
                 Console.WriteLine("NotExist");
             }
+        }
+
+        static void TestAddTwoNumbers()
+        {
+            Console.WriteLine("AddTwoNumbers");
+            Solution s = new Solution();
+
+            s.AddTwoNumbers(new List<int>(), new List<int> {0, 1});
+            s.AddTwoNumbers(new List<int> {9, 9}, new List<int> {1});
+            s.AddTwoNumbers(new List<int> {2, 4, 3}, new List<int> {5,6, 4});
+            s.AddTwoNumbers(new List<int> {4, 3}, new List<int> {5,6, 4});
+            s.AddTwoNumbers(new List<int> {3}, new List<int> {5,6, 4});
+            s.AddTwoNumbers(new List<int> {1, 2, 4, 3}, new List<int> {5,6, 4});
         }
 
         static void TestNim()
