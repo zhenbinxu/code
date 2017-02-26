@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 public class Solution
@@ -116,5 +117,124 @@ public class Solution
 
         Console.Write("Sum is ");
         l3.PrintList(l3.List);
+    }
+
+    public int LengthOfLongestSubstringV1(string s) {
+        // Given "abcabcbb", the answer is "abc", which the length is 3.
+        // Given "bbbbb", the answer is "b", with the length of 1.
+        // Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+        // Given "abcdaegha", the answer is "bcdaegh", with the length of 7.
+        int longest  = 0;
+        int slongest = 0;
+        var ss = new Dictionary<char, int>();
+        for (int start = 0, end = s.Length; start < end - longest; ) {
+            // Handle substring begining at "start"
+            ss.Clear();
+            int skip = 0;
+            for (int i = start; i < end; i++) {
+                char c = s[i];
+                if (ss.ContainsKey(c)) {
+                    bool gotRepeat = ss.TryGetValue(c, out skip);
+                    skip++; // convert index to length
+                    Debug.Assert(gotRepeat);
+                    break;
+                }
+                else {
+                    ss.Add(c, i);
+                }
+            }
+
+            // Update longest if necessary
+            if (ss.Count > longest) {
+                slongest = start;
+                longest  = ss.Count;
+            }
+            // Skip past the repeating character. 
+            start += skip;
+        }
+
+        // Print the longest substring
+        if (longest > 0) {
+            Console.Write(s.Substring(slongest, longest));
+        }
+        else {
+            Console.Write("");
+        }
+        return longest;
+    }
+
+  public int LengthOfLongestSubstring(string s) {
+        // Given "abcabcbb", the answer is "abc", which the length is 3.
+        // Given "bbbbb", the answer is "b", with the length of 1.
+        // Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+        // Given "abcdaegha", the answer is "bcdaegh", with the length of 7.
+
+        // Longest sliding window
+        int blongest  = 0;
+        int elongest  = -1;
+
+        var ss = new Dictionary<char, int>();
+        for (int b = 0, e = 0;  e < s.Length; ) {
+            // Try to extend the range [s, e]
+            char  c = s[e];
+            if (ss.ContainsKey(c)) {
+                // Locate the repeating char
+                int olde = 0;
+                bool gotRepeat = ss.TryGetValue(c, out olde);
+                Debug.Assert(gotRepeat);
+
+                // Move left side of window until we have passed the repeating char.  
+                for ( ; b <= olde; b++) {
+                    ss.Remove(s[b]);
+                }
+            }
+            // Extend e;               
+            ss.Add(c, e);
+            // Record the postion of the longest char
+            if (ss.Count > (elongest - blongest + 1)) {
+                blongest = b; 
+                elongest = e;
+            }
+
+            // Move to a new char as new ending.  
+            e++; 
+        }
+
+        // Print the longest substring
+        if ( elongest >= blongest ) {
+            Console.Write(s.Substring(blongest, elongest - blongest + 1));
+        }
+        else {
+            Console.Write("");
+        }
+        return elongest - blongest + 1;
+    }
+
+
+    public double FindMedianSortedArrays(int[] a1, int[] a2)
+    {
+        // Median = (A[(N-1)/2] + A[N/2]) / 2;
+        int N1 = a1.Length;
+        int N2 = a2.Length;
+        if (N1 < N2) return FindMedianSortedArrays(a2, a1); // Make sure a2 is shorter one. 
+        Debug.Assert(N1 > 0);
+        if (N2 == 0) return ((double)a1[(N1-1)/2] + (double)a1[N1/2]) / 2;  // If a2 is empty
+
+        int lo = 0, hi = N2 * 2;
+        while (lo <= hi) {
+            int mid2 = (lo + hi) / 2;   // Try Cut 2
+            int mid1 = N1 + N2 - mid2;  // Calculate Cut 1 accordingly
+
+            double L1 = (mid1 == 0) ? Int32.MinValue : a1[(mid1 - 1) / 2];  // Get L1, R1, L2, R2 respectxively
+            double L2 = (mid2 == 0) ? Int32.MinValue : a2[(mid2 - 1) / 2];
+            double R1 = (mid1 == N1 * 2) ? Int32.MaxValue : a1[mid1/2];
+            double R2 = (mid2 == N2 * 2) ? Int32.MaxValue : a2[mid2/2];
+
+            if (L1 > R2) lo = mid2 + 1;         // A1's lower half is too big; need to move C1 left (C2 right)
+            else if (L2 > R1) hi = mid2 - 1;    // A2's lower half too big; need to move C2 left
+            else return (Math.Max(L1, L2) + Math.Min(R1, R2)) / 2;  // Otherise, that's the rigth cut; 
+        }
+
+        return -1;
     }
 }

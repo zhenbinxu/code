@@ -14,7 +14,9 @@ namespace Algo
             //TestNim();
             //TestSquare();
             //TestTwoSum();
-            TestAddTwoNumbers();
+            //TestAddTwoNumbers();
+            //TestLengthOfLongestSubstring();
+            TestMediumOfTwoSortedArrays();
             Console.ReadLine();          
         }
 
@@ -85,5 +87,31 @@ namespace Algo
             llc.PrintList(llc.ReverseList(llc.List));
         }
 
+        static void TestLengthOfLongestSubstring()
+        {
+            Console.WriteLine("TestLengthOfLongestSubstring");
+            var testStrings = new List<string> { "", "b", "ab", "abc", "bbbbb", "pwwkew", "abcabcbb", "abcdaegha" };
+            Solution s = new Solution();
+            foreach (var t in testStrings) {
+                Console.Write(t + ":");
+                var r = s.LengthOfLongestSubstring(t); 
+                Console.WriteLine(":" + r);
+            }
+        }
+
+        static void TestMediumOfTwoSortedArrays()
+        {
+            Console.WriteLine("TestMediumOfTwoSortedArrays");
+            Solution s = new Solution();
+            double r;
+            r = s.FindMedianSortedArrays(new int[] {1, 3}, new int[] {2});          // 2.0
+            Console.WriteLine(":" + r);
+            r = s.FindMedianSortedArrays(new int[] {1, 2}, new int[] {3,4});        // (2+3)/2 = 2.5
+            Console.WriteLine(":" + r);
+            r = s.FindMedianSortedArrays(new int[] {1, 2, 3}, new int[] {3, 4});    // 3.0
+            Console.WriteLine(":" + r);
+            r = s.FindMedianSortedArrays(new int[] {1, 2, 3}, new int[] {0, 1});    // 1.0
+            Console.WriteLine(":" + r);
+        }
     }
 }
