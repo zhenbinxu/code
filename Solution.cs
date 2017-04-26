@@ -211,6 +211,12 @@ public class Solution
     }
 
 
+    public string LongestPalindrome(string s)
+    {
+        var r = String.Empty;
+        return r;
+    }
+
     public double FindMedianSortedArrays(int[] a1, int[] a2)
     {
         // Median = (A[(N-1)/2] + A[N/2]) / 2;

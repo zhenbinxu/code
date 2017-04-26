@@ -16,7 +16,8 @@ namespace Algo
             //TestTwoSum();
             //TestAddTwoNumbers();
             //TestLengthOfLongestSubstring();
-            TestMediumOfTwoSortedArrays();
+            //TestMediumOfTwoSortedArrays();
+            TestLongestPalindrome();
             Console.ReadLine();          
         }
 
@@ -112,6 +113,18 @@ namespace Algo
             Console.WriteLine(":" + r);
             r = s.FindMedianSortedArrays(new int[] {1, 2, 3}, new int[] {0, 1});    // 1.0
             Console.WriteLine(":" + r);
+        }
+
+        static void TestLongestPalindrome()
+        {
+            Console.WriteLine("TestLongestPalindrome");
+            var testStrings = new List<string> { "", "b", "ab", "bb", "abc", "bbb", "cbbd", "babad", "eeekkkkabcdefedcb", "aaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaa" };
+            Solution s = new Solution();
+            foreach (var t in testStrings) {
+                Console.Write(t + ":");
+                var r = s.LongestPalindrome(t); 
+                Console.WriteLine(":" + r);
+            }
         }
     }
 }
